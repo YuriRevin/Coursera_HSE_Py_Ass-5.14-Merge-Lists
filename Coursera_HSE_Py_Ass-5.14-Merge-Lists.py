@@ -1,34 +1,36 @@
-lista = list(map(int, input().split()))
-listb = list(map(int, input().split()))
 
 
-def merge(a: list, b: list):
-    lena = len(a)
-    lenb = len(b)
-    if len(a) > lenb:
-        a, b = b, a
-        lena, lenb = lenb, lena
-    i = 0
-    j = 0
-    listn = []
-    while i <= lena:
-        if i == lena:
-            listn = listn + b[j:lenb]
-            return listn
-        elif j == lenb:
-            listn = listn + a[i:lena]
-            return listn
-        if a[i] < b[j]:
-            listn.append(a[i])
-            i += 1
-        elif a[i] == b[j]:
-            listn.append(a[i])
-            listn.append(b[j])
-            i += 1
-            j += 1
+def merge(a, b):
+    if len(a) == 0 and len(b) == 0:
+        return
+    elif len(a) == 0 and len(b) > 0:
+        t = b
+        m = min(t)
+        k.append(m)
+        b.remove(m)
+        if len(b) > 0:
+            merge(a, b)
+    elif len(a) > 0 and len(b) == 0:
+        t = a
+        m = min(t)
+        k.append(m)
+        a.remove(m)
+        if len(a) > 0:
+            merge(a, b)
+    else:
+        t = a + b
+        m = min(t)
+        k.append(m)
+        if m in a:
+            a.remove(m)
         else:
-            listn.append(b[j])
-            j += 1
+            b.remove(m)
+        if len(a) > 0 or len(b) > 0:
+            merge(a, b)
 
 
-print(*merge(lista, listb))
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+k = []
+merge(a, b)
+print(' '.join(map(str, k)))
